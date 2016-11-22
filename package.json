@@ -1,0 +1,29 @@
+{
+  "name": "weather-say",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "lint": "node ./node_modules/eslint/bin/eslint.js '**/*.js' || true",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "cheerio": "^0.22.0",
+    "fmi-js": "git+https://github.com/mjpohja/fmi-js.git",
+    "google-spreadsheet": "^2.0.3",
+    "lodash": "^4.17.2",
+    "moment": "^2.16.0",
+    "node-cron": "^1.1.2",
+    "tts-speak": "git+https://github.com/G33kLabs/node-tts-speak.git#b234ccb07c51f95c473445e35f6874bd35b7a2de"
+  },
+  "devDependencies": {
+    "eslint": "^3.10.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.6.0"
+  }
+}
