@@ -1,25 +1,28 @@
 const $ = require('cheerio');
 const Promise = require('bluebird');
+const drive = require('../drive');
 const get = require('../get');
+const textTemplate = require('../textTemplate');
 
 const url = 'http://yle.fi/uutiset/osasto/news/';
 
 const randomItem = ar => (ar[Math.floor(Math.random() * ar.length)]);
 
-const prefixes = [
-  'Currently in news:',
-  'News agencies today',
-];
-
 module.exports = {
-  getText: () => get(url)
-      .then((doc) => {
-        const articles = $('section.recommends > article', doc);
-        const randomArticle = randomItem(articles);
-        const articleHeader = $('a > h1', randomArticle).text();
-        const randomPrefix = randomItem(prefixes);
-        const newsText = `${randomPrefix} ${articleHeader}.`;
-        return Promise.resolve(newsText);
-      }),
+  id: 'news',
+  getText: () => Promise.all([
+    get(url),
+    drive.getContent('news', ['prefix']),
+  ])
+    .then((res) => {
+      const doc = res[0];
+      const randomPrefix = randomItem(res[1].prefix);
+      const articles = $('section.recommends > article', doc);
+      const randomArticle = randomItem(articles);
+      const articleHeader = $('a > h1', randomArticle).text();
+      const newsText = `${textTemplate(randomPrefix)} ${articleHeader}.`;
+
+      return Promise.resolve(newsText);
+    }),
 };
 
