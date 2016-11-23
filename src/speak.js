@@ -8,7 +8,7 @@ const init = () => new Promise((resolve) => {
     tts: {
       engine: {                       // The engine to use for tts
         name: 'voicerss',
-        key: '000ed153d9c54a40a8e5dea5596b3677',     // The API key to use
+        key: 'ABCDE',     // The API key to use
       },
       lang: 'en-us',                  // The voice to use 'fi-fi'
       speed: 40,                      // Speed in %
