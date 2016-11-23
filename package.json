@@ -12,6 +12,7 @@
   "dependencies": {
     "bluebird": "^3.4.6",
     "cheerio": "^0.22.0",
+    "express": "^4.14.0",
     "fmi-js": "git+https://github.com/mjpohja/fmi-js.git",
     "google-spreadsheet": "^2.0.3",
     "lodash": "^4.17.2",
