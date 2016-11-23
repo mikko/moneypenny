@@ -5,6 +5,7 @@ const fmi = require('./src/content/fmi');
 const smallTalk = require('./src/content/smalltalk');
 const yleNews = require('./src/content/yleNews');
 const drive = require('./src/drive');
+const flowdock = require('./src/triggers/flowdock');
 
 // const scheduler = require('./src/scheduler');
 const place = 'tampere';
@@ -16,12 +17,15 @@ Promise.all([
   speak.init(),
 ]).then((initResults) => {
   const say = initResults[1];
+/*
   smallTalk.getText()
-    .then(text => console.log('TEST Smalltalk:', text));
+    .then(text => say(text));
   fmi.getText(place)
-    .then(text => console.log('TEST FMI:', text));
+    .then(text => say(text));
   yleNews.getText()
-    .then(text => console.log('TEST NEWS:', text));
+    .then(text => say(text));
+*/
+  flowdock(say);
 
   app.get('/say', (req, res) => {
     if (!req.query.text) {
