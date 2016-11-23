@@ -19,7 +19,7 @@ module.exports = {
       const randomPrefix = randomItem(res[1].prefix);
       const articles = $('section.recommends > article', doc);
       const randomArticle = randomItem(articles);
-      const articleHeader = $('a > h1', randomArticle).text();
+      const articleHeader = $('a > h1', randomArticle).text().trim();
       const newsText = `${textTemplate(randomPrefix)} ${articleHeader}.`;
 
       return Promise.resolve(newsText);
