@@ -3,12 +3,18 @@ const Speak = require('tts-speak');
 
 let speakInstance;
 
+const apiKey = process.env.VOICERSS_APIKEY;
+
+if (typeof apiKey !== 'string') {
+  throw new Error('Missing voicerss apikey. Api key can be given as environment variable VOICERSS_APIKEY');
+}
+
 const init = () => new Promise((resolve) => {
   speakInstance = new Speak({
     tts: {
       engine: {                       // The engine to use for tts
         name: 'voicerss',
-        key: 'ABCDE',     // The API key to use
+        key: apiKey,     // The API key to use
       },
       lang: 'en-us',                  // The voice to use 'fi-fi'
       speed: 40,                      // Speed in %
