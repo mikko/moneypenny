@@ -9,7 +9,6 @@ const { say$, feedback$ } = require('./src/triggers/http');
 const { listen } = require('./src/content/speechToText');
 
 // const scheduler = require('./src/scheduler');
-const place = 'tampere';
 
 Promise.props({
   driveInstance: drive.init(),
@@ -21,16 +20,16 @@ Promise.props({
 
     listen().then((results) => console.log('I heard', results));
   });
-
+  flowdock(say);
   yleNews.getText()
     .then(text => outputInstance(text));
 /*
   smallTalk.getText()
     .then(text => say(text));
+  const place = 'tampere';
   fmi.getText(place)
     .then(text => say(text));
   yleNews.getText()
     .then(text => say(text));
 */
-  // flowdock(say);
 });
