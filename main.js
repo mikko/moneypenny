@@ -6,7 +6,7 @@ const smallTalk = require('./src/content/smalltalk');
 const yleNews = require('./src/content/yleNews');
 const drive = require('./src/drive');
 const flowdock = require('./src/triggers/flowdock');
-
+const config = require('./src/config');
 // const scheduler = require('./src/scheduler');
 const place = 'tampere';
 
@@ -25,7 +25,7 @@ Promise.all([
   yleNews.getText()
     .then(text => say(text));
 */
-  flowdock(say);
+  // flowdock(say);
 
   app.get('/say', (req, res) => {
     if (!req.query.text) {
@@ -36,5 +36,5 @@ Promise.all([
     res.status(200).end();
   });
 
-  app.listen(process.env.PORT || 3000);
+  app.listen(config.http.port);
 });
