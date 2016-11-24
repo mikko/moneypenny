@@ -4,6 +4,7 @@ const fb = require('./content/feedback');
 const fmi = require('./content/fmi');
 const smallTalk = require('./content/smalltalk');
 const yleNews = require('./content/yleNews');
+const tkl = require('./content/tkl/index');
 
 
 let say = () => console.log('not initialized');
@@ -27,7 +28,7 @@ const availableCommands = [
     validate: command => ['status', 'mitä kuuluu'].indexOf(command) !== -1,
     execute: () => {
       const allFeedback = fb.getText();
-      say(`All feedback this week ${allFeedback}`);
+      say(`All feedback this week ${allFeedback}`)
     },
   },
   {
@@ -35,7 +36,8 @@ const availableCommands = [
     validate: command => ['sää', 'weather', 'sataako', 'is it raining'].indexOf(command) !== -1,
     execute: () => {
       fmi.getText()
-        .then(text => say(text));
+        .then(text => say(text))
+        .catch(e => say(e.message));
     },
   },
   {
@@ -43,7 +45,17 @@ const availableCommands = [
     validate: command => ['uutiset', 'uutisia', 'news'].indexOf(command) !== -1,
     execute: () => {
       yleNews.getText()
-        .then(text => say(text));
+        .then(text => say(text))
+        .catch(e => say(e.message));
+    },
+  },
+  {
+    name: 'bus',
+    validate: command => ['antin bussi', 'bus', 'bussi', 'home'].indexOf(command) !== -1,
+    execute: () => {
+      tkl.getText()
+        .then(text => say(`Only antti goes by bus. ${text}`))
+        .catch(e => say(e.message));
     },
   },
 ];
@@ -52,7 +64,8 @@ const execute = (word) => {
   const command = _.find(availableCommands, cmd => cmd.validate(word));
   if (!command) {
     smallTalk.getText()
-      .then(text => say(text));
+      .then(text => say(text))
+      .catch(e => say(e.message));
   } else {
     command.execute();
   }
