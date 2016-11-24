@@ -30,8 +30,6 @@ const init = () => new Promise((resolve) => {
     loglevel: 0,                         // Wrapper log level
   });
 
-        // voicerss apitoken    000ed153d9c54a40a8e5dea5596b3677
-
   speakInstance.once('ready', () => {
     const say = msg => speakInstance.say(msg);
     resolve(say);
