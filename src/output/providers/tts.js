@@ -1,6 +1,6 @@
 const Promise = require('bluebird');
 const Speak = require('tts-speak');
-const config = require('./config');
+const config = require('../../config');
 
 let speakInstance;
 

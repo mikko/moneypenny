@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const speak = require('./src/speak');
+const output = require('./src/output').instance;
 const fmi = require('./src/content/fmi');
 const smallTalk = require('./src/content/smalltalk');
 const yleNews = require('./src/content/yleNews');
@@ -11,20 +11,19 @@ const { listen } = require('./src/content/speechToText');
 // const scheduler = require('./src/scheduler');
 const place = 'tampere';
 
-
-Promise.all([
-  drive.init(),
-  speak.init(),
-]).then((initResults) => {
-  const say = initResults[1];
-
-  say$.subscribe(say);
+Promise.props({
+  driveInstance: drive.init(),
+  outputInstance: output.init(),
+}).then(({ outputInstance }) => {
+  say$.subscribe(outputInstance);
   feedback$.subscribe(() => {
     console.log('Listening...');
 
     listen().then((results) => console.log('I heard', results));
   });
 
+  yleNews.getText()
+    .then(text => outputInstance(text));
 /*
   smallTalk.getText()
     .then(text => say(text));
@@ -34,5 +33,4 @@ Promise.all([
     .then(text => say(text));
 */
   // flowdock(say);
-
 });
