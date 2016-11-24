@@ -1,8 +1,6 @@
+const config = require('../config');
 
-
-const apiKey = process.env.FLOWDOCK_APIKEY;
-
-if (typeof apiKey !== 'string') {
+if (typeof config.flowdock.apiKey !== 'string') {
   throw new Error('Missing flowdock apikey. Api key can be given as environment variable FLOWDOCK_APIKEY');
 }
 
@@ -13,7 +11,7 @@ const flows = ['testflow'];
 const defaultRequestOptions = {};
 
 module.exports = (cb) => {
-  const flowdockStream = FlowdockStream.createClient(org, flows, apiKey, defaultRequestOptions);
+  const flowdockStream = FlowdockStream.createClient(org, flows, config.flowdock.apiKey, defaultRequestOptions);
 
   flowdockStream.on('data', (data) => {
     const sourceFlow = flowdockStream.flows[data.flow];

@@ -1,11 +1,10 @@
 const Promise = require('bluebird');
 const Speak = require('tts-speak');
+const config = require('./config');
 
 let speakInstance;
 
-const apiKey = process.env.VOICERSS_APIKEY;
-
-if (typeof apiKey !== 'string') {
+if (typeof config.voicerrs.apiKey !== 'string') {
   throw new Error('Missing voicerss apikey. Api key can be given as environment variable VOICERSS_APIKEY');
 }
 
@@ -14,7 +13,7 @@ const init = () => new Promise((resolve) => {
     tts: {
       engine: {                       // The engine to use for tts
         name: 'voicerss',
-        key: apiKey,     // The API key to use
+        key: config.voicerrs.apiKey,     // The API key to use
       },
       lang: 'en-us',                  // The voice to use 'fi-fi'
       speed: 40,                      // Speed in %

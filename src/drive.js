@@ -1,12 +1,12 @@
 const Promise = require('bluebird');
 const _ = require('lodash');
 const GoogleSpreadsheet = require('google-spreadsheet');
-const creds = require('../googleConfig.json');
+const config = require('./config');
 
-const doc = new GoogleSpreadsheet(creds.spreadsheet_id);
+const doc = new GoogleSpreadsheet(config.google.spreadsheetId);
 
 const init = function init() {
-  return new Promise(resolve => doc.useServiceAccountAuth(creds, resolve));
+  return new Promise(resolve => doc.useServiceAccountAuth(config.google.credentials, resolve));
 };
 
 module.exports = {
