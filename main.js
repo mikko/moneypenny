@@ -6,6 +6,7 @@ const yleNews = require('./src/content/yleNews');
 const drive = require('./src/drive');
 const flowdock = require('./src/triggers/flowdock');
 const { say$, feedback$ } = require('./src/triggers/http');
+const { listen } = require('./src/content/speechToText');
 
 // const scheduler = require('./src/scheduler');
 const place = 'tampere';
@@ -19,7 +20,9 @@ Promise.all([
 
   say$.subscribe(say);
   feedback$.subscribe(() => {
-    console.log('feedback');
+    console.log('Listening...');
+
+    listen().then((results) => console.log('I heard', results));
   });
 
 /*
