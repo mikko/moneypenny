@@ -1,11 +1,8 @@
 const Promise = require('bluebird');
 const output = require('./src/output').instance;
-const fmi = require('./src/content/fmi');
-const smallTalk = require('./src/content/smalltalk');
-const yleNews = require('./src/content/yleNews');
-const tkl = require('./src/content/tkl');
 const drive = require('./src/drive');
 const flowdock = require('./src/triggers/flowdock');
+const voiceCommander = require('./src/voiceCommander');
 const { say$, feedback$ } = require('./src/triggers/http');
 const { listen } = require('./src/content/speechToText');
 
@@ -19,21 +16,13 @@ Promise.props({
   feedback$.subscribe(() => {
     console.log('Listening...');
 
-    listen().then((results) => console.log('I heard', results));
+    listen()
+      .then(results => voiceCommander.execute(results))
+      .catch(e => console.log('Something wrong listening to command', e));
   });
-  flowdock(say);
+  flowdock(outputInstance);
+  voiceCommander.init(outputInstance);
 
-/*
-  tkl.getText()
-    .then(text => outputInstance(text));
-  yleNews.getText()
-    .then(text => outputInstance(text));
-  smallTalk.getText()
-    .then(text => say(text));
-  const place = 'tampere';
-  fmi.getText(place)
-    .then(text => say(text));
-  yleNews.getText()
-    .then(text => say(text));
-*/
+  // Testing is possible for example by running commands by hand
+  // voiceCommander.execute('feedback');
 });
