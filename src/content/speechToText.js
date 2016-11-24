@@ -2,12 +2,6 @@ const Speech = require('@google-cloud/speech');
 const record = require('node-record-lpcm16');
 const config = require('../config');
 
-// Instantiates a client
-const speech = Speech({
-  projectId: config.google.speech.projectId,
-  keyFilename: config.google.credentialsFile,
-});
-
 const options = {
   config: {
     // Configure these settings based on the audio you're transcribing
@@ -18,6 +12,12 @@ const options = {
 };
 
 module.exports.listen = function listen() {
+  // Instantiates a client
+  const speech = Speech({
+    projectId: config.google.speech.projectId,
+    keyFilename: config.google.credentialsFile,
+  });
+
   return new Promise((resolve, reject) => {
     // Create a recognize stream
     const recognizeStream = speech.createRecognizeStream(options)
@@ -25,6 +25,7 @@ module.exports.listen = function listen() {
       .on('data', (data) => {
         if (data.endpointerType === 'ENDPOINTER_EVENT_UNSPECIFIED') {
           resolve(data.results);
+          record.stop();
         }
       });
 
