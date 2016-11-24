@@ -14,7 +14,7 @@ Promise.props({
 }).then(({ outputInstance }) => {
   say$.subscribe(outputInstance);
   feedback$.subscribe(() => {
-    console.log('Listening...');
+    outputInstance('Yes?');
 
     listen()
       .then(results => voiceCommander.execute(results))
