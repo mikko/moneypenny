@@ -3,6 +3,7 @@ const output = require('./src/output').instance;
 const fmi = require('./src/content/fmi');
 const smallTalk = require('./src/content/smalltalk');
 const yleNews = require('./src/content/yleNews');
+const tkl = require('./src/content/tkl');
 const drive = require('./src/drive');
 const flowdock = require('./src/triggers/flowdock');
 const { say$, feedback$ } = require('./src/triggers/http');
@@ -21,9 +22,12 @@ Promise.props({
     listen().then((results) => console.log('I heard', results));
   });
   flowdock(say);
+
+/*
+  tkl.getText()
+    .then(text => outputInstance(text));
   yleNews.getText()
     .then(text => outputInstance(text));
-/*
   smallTalk.getText()
     .then(text => say(text));
   const place = 'tampere';

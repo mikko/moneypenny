@@ -27,6 +27,7 @@
     "node-cron": "^1.1.2",
     "node-record-lpcm16": "^0.1.4",
     "rx": "^4.1.0",
+    "superagent": "^3.0.0",
     "tts-speak": "git+https://github.com/G33kLabs/node-tts-speak.git#b234ccb07c51f95c473445e35f6874bd35b7a2de"
   },
   "devDependencies": {

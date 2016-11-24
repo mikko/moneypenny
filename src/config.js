@@ -20,4 +20,8 @@ module.exports = {
   http: {
     port: process.env.PORT || 3000,
   },
+  tkl: {
+    user: process.env.TKL_USER,
+    pass: process.env.TKL_PASS,
+  },
 };
