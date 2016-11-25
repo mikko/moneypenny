@@ -29,7 +29,7 @@ module.exports = {
           temperature: latestUpdate.temperature,
         });
 
-        return weatherText;
+        return Promise.resolve(weatherText);
       });
   },
 };

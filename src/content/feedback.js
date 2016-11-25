@@ -1,7 +1,10 @@
 const fs = require('fs');
+const drive = require('../drive');
+const textTemplate = require('../textTemplate');
+
+const randomItem = ar => (ar[Math.floor(Math.random() * ar.length)]);
 
 const feedbackStorage = [];
-// const addFeedback = text => feedbackStorage.push({ time: new Date().getTime(), text });
 
 const filename = 'feedback.json';
 
@@ -14,7 +17,19 @@ const registerFeedback = (feedback) => {
   });
 };
 
-const getText = () => feedbackStorage.map(fb => fb.text).join('. ');
+const getText = () => new Promise(resolve => drive.getContent('status', ['feedbacks'])
+    .then((content) => {
+      let feedbacks = feedbackStorage.map(fb => fb.text).join('. ');
+      if (feedbacks === '') {
+        feedbacks = 'What\'s wrong with you? No feedback at all!';
+      }
+      console.log(feedbacks);
+      const params = {
+        feedbacks,
+      };
+      const feedbackText = textTemplate(randomItem(content.feedbacks), params);
+      resolve(feedbackText);
+    }));
 
 module.exports = {
   getText,

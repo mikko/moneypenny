@@ -25,8 +25,8 @@ const availableCommands = [
     name: 'status',
     validate: command => ['status', 'mitä kuuluu'].indexOf(command) !== -1,
     execute: () => {
-      const allFeedback = fb.getText();
-      return say(`All feedback this week ${allFeedback}`);
+      fb.getText()
+        .then((allFeedback) => say(allFeedback));
     },
   },
   {
