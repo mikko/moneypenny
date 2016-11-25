@@ -74,7 +74,7 @@ const execute = (word) => {
 module.exports = {
   init: (sayInstance) => {
     say = sayInstance;
-    say('Good morning. Did I fall asleep?');
+    say('Good morning');
   },
   execute,
 };
