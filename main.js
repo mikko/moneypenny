@@ -14,11 +14,13 @@ Promise.props({
 }).then(({ outputInstance }) => {
   say$.subscribe(outputInstance);
   feedback$.subscribe(() => {
-    outputInstance('Yes?');
-
-    listen()
-      .then(results => voiceCommander.execute(results))
-      .catch(e => console.log('Something wrong listening to command', e));
+    outputInstance('Yes?')
+      .then(() => {
+        console.log('Listening');
+        listen()
+          .then(results => voiceCommander.execute(results))
+          .catch(e => console.log('Something wrong listening to command', e));
+      });
   });
   flowdock(outputInstance);
   voiceCommander.init(outputInstance);

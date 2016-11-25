@@ -31,7 +31,13 @@ const init = () => new Promise((resolve) => {
   });
 
   speakInstance.once('ready', () => {
-    const say = msg => speakInstance.say(msg);
+    const say = msg => new Promise((resolveSpeak) => {
+      speakInstance
+        .say(msg)
+        .once('idle', () => {
+          resolveSpeak();
+        });
+    });
     resolve(say);
   });
 });
