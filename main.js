@@ -8,19 +8,21 @@ const { listen } = require('./src/content/speechToText');
 
 // const scheduler = require('./src/scheduler');
 
+let queue = Promise.resolve();
+
 Promise.props({
   driveInstance: drive.init(),
   outputInstance: output.init(),
 }).then(({ outputInstance }) => {
   say$.subscribe(outputInstance);
   feedback$.subscribe(() => {
-    outputInstance('Yes?')
-      .then(() => {
+    queue = queue.then(() =>
+      outputInstance('Yes?').then(() => {
         console.log('Listening');
         listen()
           .then(results => voiceCommander.execute(results))
           .catch(e => console.log('Something wrong listening to command', e));
-      });
+      }));
   });
   flowdock(outputInstance);
   voiceCommander.init(outputInstance);
